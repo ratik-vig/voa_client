@@ -1,0 +1,121 @@
+.header{
+    width: 100%;
+    height: 7rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    position: fixed;
+}
+
+.smallHeader{
+    width: 100%;
+    height: 5rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    padding: 0 16px;
+}
+
+.logo{
+    width: 13rem;
+    height: 4rem;
+}
+
+.smallLogo{
+    width: 10rem;
+    height: 3rem;
+}
+
+.menuLeftContainer{
+    flex: 1;
+}
+
+.menuRightContainer{
+    flex: 1;
+}
+
+.menuList{
+    display: flex;
+    justify-content: center;
+}
+.menuListSmall{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 32px;
+}
+
+.menuListSmall li{
+    display: inline;
+}
+
+.menuList li{
+    display: inline;
+}
+
+.linkContainer{
+    display: inline-block;
+    height: 7rem;
+    cursor: pointer;
+    padding: 0 16px;
+}
+
+.linkContainerSmall{
+        display: inline-block;
+        height: 5rem;
+        cursor: pointer;
+        padding: 0 16px;
+        /* margin-top: 1rem; */
+}
+
+.links {
+    font-size: 1.3rem;
+    font-family: 'poppins';
+    text-decoration: none;
+    color: #303030;
+    line-height: 7rem;
+}
+
+.linksSmall {
+    font-size: 1.3rem;
+    font-family: 'poppins';
+    text-decoration: none;
+    color: #303030;
+    line-height: 5rem;
+}
+
+.dropdownContainer{
+    position: absolute;
+    top: 7rem;
+    left: 0;
+    width: 100%;
+    height: 25rem;
+}
+.dropdownContainerSmall{
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    width: 100%;
+    height: 25rem;
+}
+
+@keyframes inAnimation {
+    0% {
+        height: 7rem;
+    }
+
+    100% {
+        height: 5rem;
+    }
+}
+
+@keyframes headerExpand {
+    0% {
+        height: 5rem;
+    }
+
+    100% {
+        height: 7rem;
+    }
+}
