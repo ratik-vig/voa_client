@@ -10,6 +10,7 @@ const Header = () => {
     const [renderSmallHeader, setSmallHeader] = useState(false)
 
     const handleMouseLeave = () => {
+        setSmallHeader(window.scrollY > 10)
         setSelectedMenuItem(0)
     }
 
@@ -18,13 +19,19 @@ const Header = () => {
     }
 
     const handleScroll = () => {
-        setSmallHeader(window.scrollY > 10)
-        setSelectedMenuItem(0)
+        console.log(selectedMenuItem)
+        if(selectedMenuItem === 0)
+            setSmallHeader(window.scrollY > 10)
+        
     }
 
     useEffect(() => {
+        
         window.addEventListener('scroll', handleScroll)
-      }, [])
+        return(() => {
+            window.removeEventListener('scroll', handleScroll)
+        })
+      }, [selectedMenuItem])
 
     const mountedStyle = { animation: "inAnimation 0.15s ease-in-out" };
 
