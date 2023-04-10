@@ -1,0 +1,13 @@
+.loaderContainer{
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    padding: 16px 32px;
+    position: fixed; 
+    left: 40%;
+    -webkit-transform: translateX(-40%);
+    transform: translateX(-40%);
+    top: 40%;
+    -webkit-transform: translateY(-40%);
+    transform: translateY(-40%);
+}

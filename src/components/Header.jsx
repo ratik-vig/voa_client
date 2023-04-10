@@ -3,6 +3,7 @@ import './Header.css'
 import Logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import HeaderDropDown from './HeaderDropdown'
 
 const Header = () => {
 
@@ -21,7 +22,7 @@ const Header = () => {
     const handleScroll = () => {
         console.log(selectedMenuItem)
         if(selectedMenuItem === 0)
-            setSmallHeader(window.scrollY > 10)
+            setSmallHeader(window.scrollY > 50)
         
     }
 
@@ -71,22 +72,14 @@ const Header = () => {
                                 <Link className='linksSmall' to='/'>Rides <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 2 && 
-                                <div className={renderSmallHeader ?'dropdownContainerSmall' : 'dropdownContainer'} style={selectedMenuItem === 2 ? {  backgroundColor: '#B4C868', borderTop: '1px solid #b4c868'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
                         </li>
                         <li onMouseOver={() => handleMouseOver(3)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainerSmall' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0' } : {}}>
                                 <Link className='linksSmall' to='/'>Explore <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 3 && 
-                                <div className={renderSmallHeader ?'dropdownContainerSmall' : 'dropdownContainer'} style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
                         </li>              
                     </ul>
                 </div>
@@ -94,7 +87,7 @@ const Header = () => {
         )
     }
 
-    return(
+    return (
         <>
             {!renderSmallHeader ? <div className='header' style={{animation: 'headerExpand 0.4s ease'}}>
                 <div className='menuLeftContainer'>
@@ -110,22 +103,14 @@ const Header = () => {
                                 <Link className='links' to='/'>Rides <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 2 && 
-                                <div className='dropdownContainer' style={selectedMenuItem === 2 ? {  backgroundColor: '#B4C868', borderTop: '1px solid #b4c868'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
                         </li>
                         <li onMouseOver={() => handleMouseOver(3)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainer' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0' } : {}}>
                                 <Link className='links' to='/'>Explore <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 3 && 
-                                <div className='dropdownContainer' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
                         </li>              
                     </ul>
                 </div>
@@ -139,22 +124,14 @@ const Header = () => {
                                 <Link className='links' to='/'>Info {selectedMenuItem === 4 ? <ChevronUpIcon /> : <ChevronDownIcon />}</Link>
                             </div>
 
-                            { selectedMenuItem === 4 && 
-                                <div className='dropdownContainer' style={selectedMenuItem === 4 ? {backgroundColor: '#62C5C6'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 4 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
                         </li>  
                         <li onMouseOver={() => handleMouseOver(5)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainer' style={selectedMenuItem === 5 ? {backgroundColor: '#EFC254' } : {}}>
                                 <Link className='links' to='/'>Tickets <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 5 && 
-                                <div className='dropdownContainer' style={selectedMenuItem === 5 ? {backgroundColor: '#EFC254'}:{}}>
-
-                                </div>
-                            }
+                            { selectedMenuItem === 5 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
 
                         </li>  
                     </ul>
