@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import './Header.css'
 import Logo from '../assets/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import HeaderDropDown from './HeaderDropdown'
+import { Button, Text, Tooltip } from '@chakra-ui/react'
 
-const Header = () => {
+const Header = ({ showLinks, attractionLinks }) => {
 
     const [selectedMenuItem, setSelectedMenuItem] = useState(0)
     const [renderSmallHeader, setSmallHeader] = useState(false)
 
+    const location = useLocation()
+    const navigate = useNavigate()
+
     const handleMouseLeave = () => {
-        setSmallHeader(window.scrollY > 10)
+        setSmallHeader(window.scrollY > 50)
         setSelectedMenuItem(0)
     }
 
@@ -21,6 +25,7 @@ const Header = () => {
 
     const handleScroll = () => {
         console.log(selectedMenuItem)
+        console.log(window.scrollY)
         if(selectedMenuItem === 0)
             setSmallHeader(window.scrollY > 50)
         
@@ -33,6 +38,10 @@ const Header = () => {
             window.removeEventListener('scroll', handleScroll)
         })
       }, [selectedMenuItem])
+
+      useEffect(() => {
+        console.log(location.pathname)
+      }, [location.pathname])
 
     const mountedStyle = { animation: "inAnimation 0.15s ease-in-out" };
 
@@ -55,6 +64,8 @@ const Header = () => {
 
     const smallHeader = () => {
         return(
+            <>
+            <div style={{width: '100%', height: '5rem'}}></div>
             <div className='smallHeader' style={{animation: 'inAnimation 0.4s ease'}}>
                 <div>
                     <img src={Logo} className={'smallLogo'} />
@@ -72,24 +83,26 @@ const Header = () => {
                                 <Link className='linksSmall' to='/'>Rides <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks} /> }
                         </li>
                         <li onMouseOver={() => handleMouseOver(3)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainerSmall' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0' } : {}}>
                                 <Link className='linksSmall' to='/'>Explore <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> }
                         </li>              
                     </ul>
                 </div>
             </div>
+            </>
         )
     }
 
     return (
-        <>
-            {!renderSmallHeader ? <div className='header' style={{animation: 'headerExpand 0.4s ease'}}>
+        (location.pathname !== '/login' &&  location.pathname !== '/register') && <>
+            {!renderSmallHeader ? <div style={{animation: 'headerExpand 0.4s ease'}}><div style={{width: '100%', height: '7rem'}}></div><div className='header' style={{animation: 'headerExpand 0.4s ease'}}>
+                
                 <div className='menuLeftContainer'>
                     <ul className='menuList'>
                         <li onMouseOver={() => handleMouseOver(1)} onMouseLeave={handleMouseLeave}>
@@ -103,14 +116,14 @@ const Header = () => {
                                 <Link className='links' to='/'>Rides <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks} /> }
                         </li>
                         <li onMouseOver={() => handleMouseOver(3)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainer' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0' } : {}}>
-                                <Link className='links' to='/'>Explore <ChevronDownIcon /></Link>
+                                <Link className='links' to='/'>Shows <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> }
                         </li>              
                     </ul>
                 </div>
@@ -124,19 +137,25 @@ const Header = () => {
                                 <Link className='links' to='/'>Info {selectedMenuItem === 4 ? <ChevronUpIcon /> : <ChevronDownIcon />}</Link>
                             </div>
 
-                            { selectedMenuItem === 4 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            { selectedMenuItem === 4 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> }
                         </li>  
-                        <li onMouseOver={() => handleMouseOver(5)} onMouseLeave={handleMouseLeave}>
-                            <div className='linkContainer' style={selectedMenuItem === 5 ? {backgroundColor: '#EFC254' } : {}}>
-                                <Link className='links' to='/'>Tickets <ChevronDownIcon /></Link>
+                        <li>
+                        <Tooltip label={localStorage.getItem("token") ? "" : "You must be logged in to book tickets"}>
+                            <div className='linkContainer'  onClick={() => localStorage.getItem("token") && navigate("/bookTickets")}>
+                                <Text className='links'>Book Tickets </Text>
+                                
                             </div>
+                        </Tooltip>
 
-                            { selectedMenuItem === 5 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} /> }
+                            {/* { selectedMenuItem === 5 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> } */}
 
+                        </li> 
+                        <li style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Button>Login</Button>
                         </li>  
                     </ul>
                 </div>
-            </div> : smallHeader()}
+            </div> </div>: smallHeader()}
         </>
     )
 }

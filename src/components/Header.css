@@ -5,6 +5,8 @@
     display: flex;
     align-items: center;
     position: fixed;
+    top: 0;
+    z-index: 1;
 }
 
 .smallHeader{
@@ -16,6 +18,7 @@
     justify-content: flex-start;
     position: fixed;
     padding: 0 16px;
+    top: 0;
 }
 
 .logo{

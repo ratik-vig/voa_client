@@ -1,10 +1,10 @@
 import Lottie from "lottie-react"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import animation from '../assets/rollercoaster.json'
 import './Loader.css'
 
 const Loader = () => {
-    
+
     const lottieRef = useRef();
     
     useEffect(() => {
@@ -27,7 +27,7 @@ const Loader = () => {
 
             <div className='loaderContainer' style={{zIndex: 9}}>
                 <Lottie lottieRef={lottieRef} style={{height: 300}} animationData={animation} loop={true} />
-                <h2 style={{color: '#000', textAlign: 'center', fontFamily: 'poppins', fontSize: '20px', fontWeight: 400}}>Hang on tight!</h2>
+                <h2 style={{color: '#000', textAlign: 'center', fontFamily: 'poppins', fontSize: '20px', fontWeight: 400, marginTop: -30}}>Hang on tight!</h2>
             </div>
         </> 
     )
