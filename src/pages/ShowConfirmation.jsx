@@ -9,11 +9,22 @@ const ShowConfirmation = () => {
     const {orderId} = useParams()
     const [orderDetails, setDetails] = useState([])
     const [showTime, setTime] = useState([])
+    const [tickets, setTicket] = useState([0,0,0])
+
     const getOrderDetails = async() => {
         try{
             const result = await axios.get("http://localhost:3000/api/v1/shows/getOrderDetails", {params: {order_id: orderId}})
             console.log(result.data)
             setDetails(result.data)
+            let adult = 0
+            let child = 0
+            let senior = 0
+            result.data.map(item => {
+                if(item.show_tick_type === 'adult') adult++
+                if(item.show_tick_type === 'child') child++
+                if(item.show_tick_type === 'senior') senior++
+            })
+            setTicket([adult, child, senior])
         }catch(error){
             console.log(error)
         }
@@ -65,7 +76,14 @@ const ShowConfirmation = () => {
                     <Text style={{fontWeight: 'bold'}}>Store Name</Text>
                     <Text> {orderDetails[0]?.show_name}</Text>
                 </div>
-                
+               
+            </div>
+
+            <div style={{marginLeft: 64, marginTop: 32}}>
+                    <Text>{`Adult tickets ${tickets[0]}`}</Text>
+                    <Text>{`Child tickets ${tickets[1]}`}</Text>
+                    <Text>{`Senior tickets ${tickets[2]}`}</Text>
+                    <Text style={{fontWeight: 'bold', marginTop: 8}}>{`Order total ${orderDetails[0]?.order_amt}`}</Text>
             </div>
         </div>
 

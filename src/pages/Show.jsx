@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SimpleImageSlider from "react-simple-image-slider";
 import jwt from 'jwt-decode'
 
@@ -44,6 +44,8 @@ const Show = ({setLoading}) => {
 
     const initialRef = useRef(null)
     const finalRef = useRef(null)
+
+    const navigate = useNavigate()
 
     const [cardDetails, setCardDetails] = useState({
         cardName: '',
@@ -194,7 +196,17 @@ const Show = ({setLoading}) => {
                 cardType: cardDetails.cardType
             }
             const result = await axios.post("http://localhost:3000/api/v1/shows/buyTicket", {obj})
-            console.log(result)
+            if(result){
+                console.log(result)
+                setTimeout(() => {
+                    navigate(`/showConfirmation/${result.data[0][0].ORDER_ID}`)
+
+                }, 1000)
+            }
+            //     setTimeout(() => (
+            //         navigate(`/showConfirmation/${result.data.orderID}`)
+            //     ), 1000)
+            // }
         }catch(error){
             console.log(error)
         }
