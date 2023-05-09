@@ -15,7 +15,7 @@ const Header = ({ showLinks, attractionLinks, storeLinks }) => {
     const navigate = useNavigate()
 
     const handleMouseLeave = () => {
-        setSmallHeader(window.scrollY > 50)
+        setSmallHeader(window.scrollY > 1500)
         setSelectedMenuItem(0)
     }
 
@@ -27,7 +27,7 @@ const Header = ({ showLinks, attractionLinks, storeLinks }) => {
         console.log(selectedMenuItem)
         console.log(window.scrollY)
         if(selectedMenuItem === 0)
-            setSmallHeader(window.scrollY > 50)
+            setSmallHeader(window.scrollY > 1500)
         
     }
 
@@ -162,7 +162,11 @@ const Header = ({ showLinks, attractionLinks, storeLinks }) => {
 
                                 localStorage.removeItem("token")
                                 window.location.reload()
+                                navigate('/')
                             }}>Logout</Button> : <Button colorScheme={'orange'} onClick={() => navigate('/login')}>Login</Button>}
+                        </li>  
+                        <li style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: 16}}>
+                            {token && <Button colorScheme={'orange'} onClick={() => {navigate('/orders')}}> Orders</Button> }
                         </li>  
                     </ul>
                 </div>

@@ -23,6 +23,7 @@ import TicketConfirm from './pages/TicketConfirm';
 import StoreDetails from './pages/StoreDetails';
 import StoreConfirmation from './pages/StoreConfirmation';
 import ShowConfirmation from './pages/ShowConfirmation';
+import Orders from './pages/Orders';
 
 function App() {
   const [loading, setLoading] = useState(false)
@@ -79,6 +80,7 @@ useEffect(() => {
                 <Route path="/ticketConfirmation/:orderId" element={<TicketConfirm setLoading={setLoading} /> } /> 
                 <Route path="/storeConfirmation/:orderId" element={<StoreConfirmation setLoading={setLoading} /> } />
                 <Route path="/showConfirmation/:orderId" element={<ShowConfirmation setLoading={setLoading} /> } />
+                <Route path="/orders" element={<Orders setLoading={setLoading} />} />
               </Routes>
           </Router>
 
