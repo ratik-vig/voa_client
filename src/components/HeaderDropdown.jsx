@@ -4,7 +4,7 @@ import rides from '../assets/wheel-coaster.png'
 import axios from 'axios'
 import {Text} from '@chakra-ui/react'
 
-const HeaderDropDown = ({ renderSmallHeader, selectedMenuItem, setSelectedMenuItem, showLinks, attractionLinks }) => {
+const HeaderDropDown = ({ renderSmallHeader, selectedMenuItem, setSelectedMenuItem, showLinks, attractionLinks, storeLinks }) => {
 
     const navigate = useNavigate()
 
@@ -29,6 +29,10 @@ const HeaderDropDown = ({ renderSmallHeader, selectedMenuItem, setSelectedMenuIt
                 const slinks = showLinks.data.map(item => item)
                 return slinks
             }
+            case 4: {
+                const stLinks = storeLinks.data.map(item => item)
+                return stLinks
+            }
             default: return []
         }
     }
@@ -40,6 +44,7 @@ const HeaderDropDown = ({ renderSmallHeader, selectedMenuItem, setSelectedMenuIt
     const getName = (item) => {
         if(selectedMenuItem === 2) return item.atrn_name
         if(selectedMenuItem === 3) return item.show_name
+        if(selectedMenuItem === 4) return item.store_name
     }
 
     const navigateToLink = (item) => {
@@ -49,6 +54,9 @@ const HeaderDropDown = ({ renderSmallHeader, selectedMenuItem, setSelectedMenuIt
         }
         else if(selectedMenuItem === 3){
             navigate(`/show/${item.show_id}`)
+            setSelectedMenuItem(0)
+        }else if(selectedMenuItem === 4){
+            navigate(`/store/details/${item.store_id}`)
             setSelectedMenuItem(0)
         }
     }

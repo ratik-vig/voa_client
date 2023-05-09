@@ -6,11 +6,11 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import HeaderDropDown from './HeaderDropdown'
 import { Button, Text, Tooltip } from '@chakra-ui/react'
 
-const Header = ({ showLinks, attractionLinks }) => {
+const Header = ({ showLinks, attractionLinks, storeLinks }) => {
 
     const [selectedMenuItem, setSelectedMenuItem] = useState(0)
     const [renderSmallHeader, setSmallHeader] = useState(false)
-
+    const [token, setToken] = useState('')
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -34,14 +34,21 @@ const Header = ({ showLinks, attractionLinks }) => {
     useEffect(() => {
         
         window.addEventListener('scroll', handleScroll)
+        
         return(() => {
             window.removeEventListener('scroll', handleScroll)
         })
       }, [selectedMenuItem])
 
       useEffect(() => {
-        console.log(location.pathname)
-      }, [location.pathname])
+            console.log('checking')
+            const token = localStorage.getItem("token")
+            setToken(token ? token : '')
+            return () => {
+                setToken("")
+            }
+        
+      }, [window.location])
 
     const mountedStyle = { animation: "inAnimation 0.15s ease-in-out" };
 
@@ -116,14 +123,14 @@ const Header = ({ showLinks, attractionLinks }) => {
                                 <Link className='links' to='/'>Rides <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks} /> }
+                            { selectedMenuItem === 2 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks} storeLinks={storeLinks} /> }
                         </li>
                         <li onMouseOver={() => handleMouseOver(3)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainer' style={selectedMenuItem === 3 ? {backgroundColor: '#DB73A0' } : {}}>
                                 <Link className='links' to='/'>Shows <ChevronDownIcon /></Link>
                             </div>
 
-                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> }
+                            { selectedMenuItem === 3 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks} storeLinks={storeLinks} /> }
                         </li>              
                     </ul>
                 </div>
@@ -134,10 +141,10 @@ const Header = ({ showLinks, attractionLinks }) => {
                     <ul className='menuList'>
                         <li onMouseOver={() => handleMouseOver(4)} onMouseLeave={handleMouseLeave}>
                             <div className='linkContainer' style={selectedMenuItem === 4 ? {backgroundColor: '#62C5C6' } : {}}>
-                                <Link className='links' to='/'>Info {selectedMenuItem === 4 ? <ChevronUpIcon /> : <ChevronDownIcon />}</Link>
+                                <Link className='links' to='/'>Stores {selectedMenuItem === 4 ? <ChevronUpIcon /> : <ChevronDownIcon />}</Link>
                             </div>
 
-                            { selectedMenuItem === 4 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}/> }
+                            { selectedMenuItem === 4 && <HeaderDropDown renderSmallHeader={renderSmallHeader} selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} showLinks={showLinks} attractionLinks={attractionLinks}  storeLinks={storeLinks} /> }
                         </li>  
                         <li>
                         <Tooltip label={localStorage.getItem("token") ? "" : "You must be logged in to book tickets"}>
@@ -151,7 +158,11 @@ const Header = ({ showLinks, attractionLinks }) => {
 
                         </li> 
                         <li style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                            <Button>Login</Button>
+                            {token ? <Button colorScheme={'orange'} onClick={() => {
+
+                                localStorage.removeItem("token")
+                                window.location.reload()
+                            }}>Logout</Button> : <Button colorScheme={'orange'} onClick={() => navigate('/login')}>Login</Button>}
                         </li>  
                     </ul>
                 </div>

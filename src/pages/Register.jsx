@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Heading, Image, Text } from "@chakra-ui/react"
+import { Checkbox, Heading, Image, Text } from "@chakra-ui/react"
 import logo from '../assets/logo.png'
 import {
     FormControl,
@@ -15,6 +15,8 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confPassword, setConfPassword] = useState("")
+    const [isMember, setMember] = useState(false)
+
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -25,7 +27,8 @@ const Register = () => {
 
     const handleRegister = async() => {
         try{
-            const data = {email, password, is_admin: 0}
+            const data = {email, password, is_admin: 0, is_member: isMember}
+            console.log(data)
             if(password !== confPassword) {
                 return 
             }
@@ -58,6 +61,16 @@ const Register = () => {
 
                     <FormLabel style={{marginTop: 16}}>Confirm Password</FormLabel>
                     <Input name={"confPassword"} placeholder='Confirm Password' type={"password"} value={confPassword} onChange={handleChange} />
+
+                    <FormLabel style={{marginTop: 16}}>Sign up for membership</FormLabel>
+                    <Checkbox 
+                        isChecked={isMember} 
+                        onChange={(e) =>{
+                            setMember(e.target.checked)
+                        }}
+                        >
+                            Become a Member
+                        </Checkbox>
 
                     <Button colorScheme='orange' style={{width: '100%', marginTop: 16}} onClick={handleRegister}>Register</Button>
 

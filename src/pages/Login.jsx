@@ -28,6 +28,7 @@ const Login = ({setToken}) => {
             console.log(data)
             const result = await axios.post('http://localhost:3000/api/v1/users/login', data)
             if(result.data){
+                console.log(result)
                 localStorage.setItem("token", result.data)
                 setToken(result.data)
                 navigate("/")
